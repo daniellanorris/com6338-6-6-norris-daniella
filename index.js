@@ -1,53 +1,45 @@
-/* Define variables */
-var menuContainer = document.querySelector('menu')
-var hamburgerButton = document.querySelector('hamburger-btn')
+//Define variables
+var menuContainer = document.querySelector('.menu')
+var hamburgerButton = document.querySelector('button.hamburger-btn')
 var menu = document.getElementById('main-menu')
-var hamburgerMenu = document.querySelector('hamburger-menu')
+var hamburgerMenu = document.querySelector('.hamburger-menu')
 
-/* run functions */
+// run functions 
 
-function menuClick(e) {
-    e.preventDefault();
-    if(clicked == true ) {
-        if(hamburgerButton.getAttribute('aria-expanded', false)) {
-                hamburgerMenu.classList.addAttribute('show-menu')
-                hamburgerButton.setAttribute('aria-expanded', true);
-                menu.focus()
-            }
-    }  {
-            function closeHamburgerMenu(){
-                hamburgerMenu.classList.removeAttribute('show-menu')
-                hamburgerButton.setAttribute('aria-expanded', false);
-                hamburgerButton.focus()
-            }
-    /*call functions with .onclick */
-    hamburgerButton.onclick = menuClick(e)
-    var clicked = hamburgerButton.onclick
+function menuClick() {
+    if (hamburgerButton.getAttribute('aria-expanded') === 'false') {
+        hamburgerMenu.classList.add('show-menu')
+        hamburgerButton.setAttribute('aria-expanded', true);
 
-    document.body.onclick = function(e) {
-        if (
-            hamburgerMenu.contains(e.target) ||
-            e.target === hamburgerButton
-        ) {
-            return
-        }
-        closeHamburgerMenu()
+    } else {
+        hamburgerMenu.classList.remove('show-menu')
+        hamburgerButton.setAttribute('aria-expanded', false);
+        hamburgerButton.focus()
     }
-    
-    document.onkeyup = function(e) {
-        if (
-            e.key === 'Tab' &&
-            hamburgerMenu.classList.contains('show-menu') &&
-            !hamburgerMenu.contains(document.activeElement)
-        ) {
-            hamburgerButton.focus()
-        }
-        if(e.key === 'Escape')
-            closeHamburgerMenu()
-        }
-    
-    }
-    
-    
 }
+
+// call function with .onclick 
+hamburgerButton.onclick = menuClick
+
+// create click function for clicking outside menu
+document.body.onclick = function(e) {
+    console.log('click')
+   if(!menuContainer.contains(e.target)) {
+        hamburgerButton.setAttribute('aria-expanded', false);
+        hamburgerMenu.classList.remove('show-menu')
+    } 
+}
+// create keyup function for the escape key
+document.onkeyup = function (e) {
+    if (e.key === 'Escape') {
+        hamburgerMenu.classList.remove('show-menu')
+        hamburgerButton.setAttribute('aria-expanded', false);
+        hamburgerButton.focus()
+
+    }
+
+}
+
+
+
 
